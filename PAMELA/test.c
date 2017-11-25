@@ -30,10 +30,19 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 {
       const char *user = NULL;
       int pgu_ret;
+      int gpn_ret;
+      struct passwd *pw = NULL, pw_s;
+      char buffer[1024];
 
       pgu_ret = pam_get_user(pamh, &user, NULL);
       if (pgu_ret != PAM_SUCCESS || user == NULL)
           return(PAM_IGNORE);
+
+      gpn_ret = getpwnam_r(user, &pw_s, buffer, sizeof(buffer), &pw);
+      if (gpn_ret != 0 || pw == NULL || pw->pw_dir == NULL || pw->pw_dir[0] != '/')
+      {
+          return(PAM_IGNORE);
+      }
       return(PAM_IGNORE);
 }
 
