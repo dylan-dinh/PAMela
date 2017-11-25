@@ -8,12 +8,14 @@
 /* PAM entry point for creating session*/
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
+  printf("%s\n","yo fils de pute");
     return(PAM_IGNORE);
 }
 
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
+  printf("%s\n", "good bye fils de pute" );
     return(PAM_IGNORE);
 }
 
@@ -28,7 +30,6 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 {
     return(PAM_IGNORE);
 }
-
 /*
 PAM entry point for setting user credentials (that is, to actually
 establish the authenticated user's credentials to the service provider)
