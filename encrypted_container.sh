@@ -1,4 +1,4 @@
-f [ -f "/home/$USER/secure_data$USER" ]
+if [ -f "/home/$USER/secure_data$USER" ]
     then
         echo "good container"
     else
