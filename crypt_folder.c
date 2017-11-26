@@ -76,6 +76,13 @@ int crypt_it(const char *user_name, int do_it)
       if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /%s/%s",
                   FOLDER, user_name, user_name, SECURE_DATA) == 1)
             return (1);
+            char mode[4]="0755";
+            char buf[100]="/root/secure_data-rw";
+            int i;
+            i = atoi(mode);
+                chmod (buf, i);
+                chown(buf, name_to_uid(user_name), 0);
+            return (good_file(user_name));
       }
     else
       {
@@ -86,24 +93,35 @@ int crypt_it(const char *user_name, int do_it)
           if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
                       FOLDER, user_name, user_name, SECURE_DATA) == 1)
                 return (1);
+                char mode[4]="0755";
+                char buf[100]="/home/secure_data-rw";
+                int i;
+                i = atoi(mode);
+                    chmod (buf, i);
+                    chown(buf, name_to_uid(user_name), 0);
+              return (good_file(user_name));
       }
         system(buffer);
-    /*if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
-                FOLDER, user_name, user_name, SECURE_DATA) == 1)
-          return (1);*/
+        return (PAM_SUCCESS);
+  }
 
-    char mode[4]="0755";
-    char buf[100]="/home/secure_data-rw";
-    int i;
-    i = atoi(mode);
-        chmod (buf, i);
-        chown(buf, name_to_uid(user_name), 0);
-        //chown(user_name:user_name -R FOLDER user_name);
+  if (do_it == 1)
+  {
+    if (strcmp(user_name, "root") == 0)
+  {
+    memset(buffer, 0, 1024);
+    printf("Processing encryption...");
+    if (sprintf(buffer, "umount /root/%s/%s", user_name, SECURE_DATA) == 1)
+      return (1);
+    system(buffer);
+    if (sprintf(buffer, "cryptsetup luksClose %s%s", FOLDER, user_name) == 1)
+      return (1);
+    system(buffer);
 
     return (good_file(user_name));
   }
 
-  if (do_it == 1)
+  else
   {
     memset(buffer, 0, 1024);
     printf("Processing encryption...");
@@ -116,7 +134,9 @@ int crypt_it(const char *user_name, int do_it)
 
     return (good_file(user_name));
   }
-  return (PAM_SUCCESS);
+
+}
+    return (PAM_SUCCESS);
 }
 
 int begin_crypt(const char *user_name, int user_id, int do_it)
