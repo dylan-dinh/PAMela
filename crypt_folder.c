@@ -8,6 +8,10 @@
 #define GOOD_USER_ID 2
 #define BAD_USER 3
 
+#include <pwd.h>
+#include <sys/types.h>
+#include <syslog.h>
+#include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +20,7 @@
 #include <security/pam_modules.h>
 
 
-int good_file(cons char *user_name)
+int good_file(const char *user_name)
 {
   char    buffer[1024];
 
@@ -38,6 +42,24 @@ int  check_username(const char *user_name)
     return (0);
 }
 
+uid_t name_to_uid(char const *name)
+{
+  if (!name)
+    return -1;
+
+  long const buflen = sysconf(_SC_GETPW_R_SIZE_MAX);
+  if (buflen == -1)
+    return -1;
+
+  char buf[buflen];
+  struct passwd pwbuf, *pwbufp;
+  if (0 != getpwnam_r(name, &pwbuf, buf, buflen, &pwbufp)
+      || !pwbufp)
+    return (-1);
+
+  return (pwbufp->pw_uid);
+}
+
 int crypt_it(const char *user_name, int do_it)
 {
   char    buffer[1024];
@@ -54,8 +76,14 @@ int crypt_it(const char *user_name, int do_it)
                 FOLDER, user_name, user_name, SECURE_DATA) == 1)
           return (1);
         system(buffer);
-        chmod(user_name=rw ~/secure_data-rw);
-        chown(user_name:user_name -R FOLDER user_name);
+
+    char mode[4]="0755";
+    char buf[100]="/home/secure_data-rw";
+    int i;
+    i = atoi(mode);
+        chmod (buf, i);
+        chown(buf, name_to_uid(user_name), 0);
+        //chown(user_name:user_name -R FOLDER user_name);
 
     return (good_file(user_name));
   }

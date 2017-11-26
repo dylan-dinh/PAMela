@@ -1,30 +1,30 @@
-SRC     =       crypt_folder.c
+SRC			=				crypt_folder.c
 
-OBJ     =       $(SRC:.c=.o)
+OBJ			=				$(SRC:.c=.o)
 
-NAME    =       /lib/x86_64-linux-gnu/security/pam_module.so
+NAME		=				/lib/x86_64-linux-gnu/security/pam_module.so
 
-CC      =       gcc
+CC			=				gcc
 
-all:            $(NAME)
+all:						$(NAME)
 
-$(NAME):        $(OBJ)
-                $(CC) -c -fpic $(SRC)
-                sudo $(CC) --shared -o $(NAME) $(OBJ)
+$(NAME):				$(OBJ)
+								$(CC) -c -fpic $(SRC)
+								sudo $(CC) --shared -o $(NAME) $(OBJ)
 
-install:        installer.sh all
-                ./encrypted_container.sh
-                sudo ./installer.sh
+install:				installer.sh all
+								./encrypted_container.sh
+								sudo ./installer.sh
 
-uninstall:      uninstaller.sh fclean
-                sudo ./uninstaller.sh
+uninstall:			uninstaller.sh fclean
+								sudo ./uninstaller.sh
 
 clean:
-                rm -f $(OBJ)
+								rm -f $(OBJ)
 
-fclean:         clean
-                sudo rm -f $(NAME)
+fclean:					clean
+								sudo rm -f $(NAME)
 
-re:             fclean all
+re:							fclean all
 
-.PHONY:         all clean fclean re
+.PHONY:					all clean fclean re
