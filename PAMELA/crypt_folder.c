@@ -5,31 +5,41 @@
 #include <security/pam_appl.h>
 #include <security/pam_modules.h>
 
+
+
+
+
+
+
+
+
+
+
 /* PAM entry point for creating session*/
 int pam_sm_open_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-  printf("%s\n","yo fils de pute");
-    return(PAM_IGNORE);
+  printf("%s\n","Opening pam session");
+    return(PAM_SUCCESS);
 }
 
 /* PAM entry point for session cleanup */
 int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-  printf("%s\n", "good bye fils de pute" );
-    return(PAM_IGNORE);
+  printf("%s\n", "Closing pam session" );
+    return(PAM_SUCCESS);
 }
 
   /* PAM entry point for accounting */
 int pam_sm_acct_mgmt(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-    return(PAM_IGNORE);
+    return(PAM_SUCCESS);
 }
 
   /* PAM entry point for authentication verification */
 int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
       const char *user = NULL;
-      int pgu_ret, gpn_ret, snp_ret, a_ret;
+      int pgu_ret, gpn_ret, snp_ret, a_ret = 0;
       struct passwd *pw = NULL, pw_s;
       char buffer[1024];
 
@@ -38,7 +48,7 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
       if (pgu_ret != PAM_SUCCESS || user == NULL)
       {
         syslog(LOG_ERR, "cannot determine user name");
-        return(PAM_IGNORE);
+        return(PAM_AUTH_ERR);
       }
 
       // get home directory by user_name
@@ -53,11 +63,11 @@ int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, const char **ar
 
       //check user permission
       a_ret = access(checkfile, F_OK);
-      if (a_ret == 0) 
+      if (a_ret == 0)
         /* The user's file exists, return authentication failure */
           return(PAM_AUTH_ERR);
 
-      return(PAM_IGNORE);
+      return(PAM_SUCCESS);
 }
 
 /*
@@ -66,12 +76,12 @@ establish the authenticated user's credentials to the service provider)
 */
 int pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-  return(PAM_IGNORE);
+  return(PAM_SUCCESS);
 }
 
 
   /* PAM entry point for authentication token (password) changes */
 int pam_sm_chauthtok(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
-  return(PAM_IGNORE);
+  return(PAM_SUCCESS);
 }
