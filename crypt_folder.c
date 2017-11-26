@@ -73,19 +73,24 @@ int crypt_it(const char *user_name, int do_it)
       if (sprintf(buffer, "cryptsetup luksopen /%s/%s%s %s%s",
                   user_name, FOLDER, user_name, FOLDER, user_name) == 1)
       return (1);
+      if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /%s/%s",
+                  FOLDER, user_name, user_name, SECURE_DATA) == 1)
+            return (1);
       }
     else
       {
         if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
                     user_name, FOLDER, user_name, FOLDER, user_name) == 1)
           return (1);
+          system(buffer);
+          if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
+                      FOLDER, user_name, user_name, SECURE_DATA) == 1)
+                return (1);
       }
-
         system(buffer);
-    if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
+    /*if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
                 FOLDER, user_name, user_name, SECURE_DATA) == 1)
-          return (1);
-        system(buffer);
+          return (1);*/
 
     char mode[4]="0755";
     char buf[100]="/home/secure_data-rw";
