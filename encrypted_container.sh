@@ -10,10 +10,11 @@ if [ -f "/home/$USER/secure_data-$USER" ]
           u=$USER
         fi
         sudo apt-get install cryptsetup
-        dd if=/dev/urandom bs=1M count=50 of=/$u/secure_data-$u
-        sudo cryptsetup luksFormat /$u/secure_data-$u
-        sudo cryptsetup luksOpen /$u/secure_data-$u secure_data-$u
-        sudo mkfs.ext4 /dev/mapper/secure_data-$u
-        mkdir /$u/secure_data-rw
+        dd if=/dev/zero of=/$u/encrypted.img bs=1 count=0 seek=1G
+        dd if=/dev/urandom of=/$u/secure_data-$u.key bs=256 count=1
+        sudo cryptsetup luksFormat /$u/encrypted.img /$u/secure_data-$u.key
+        sudo cryptsetup luksOpen /$u/encrypted.img $u_volume --key-file /$u/secure_data-$u.key
+        sudo mkfs.ext4 /dev/mapper/$u_volumes
+        mkdir -p /$u/secure_data-rw
         echo "/dev/mapper/secure_data-$u /home/$u/secure_data-rw ext4 defaults, noauto 0 0" | sudo tee --append /etc/fstab
     fi
