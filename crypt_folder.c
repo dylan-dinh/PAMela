@@ -72,8 +72,10 @@ int crypt_it(const char *user_name, int do_it)
       if (sprintf(buffer, "cryptsetup luksopen /%s/%s%s %s%s",
         user_name, FOLDER, user_name, FOLDER, user_name) == 1)
         else
-        if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
-          user_name, FOLDER, user_name, FOLDER, user_name) == 1)
+        {
+          if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
+                      user_name, FOLDER, user_name, FOLDER, user_name) == 1)
+                    }
 
           return (1);
         system(buffer);
