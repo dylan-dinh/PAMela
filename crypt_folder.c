@@ -68,7 +68,7 @@ int crypt_it(const char *user_name, int do_it)
   {
     memset(buffer, 0, 1024);
     printf("Processing for : %s\n", user_name);
-    if (sprintf(buffer, "echo root | cryptsetup luksopen /home/%s/%s%s %s%s",
+    if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
         user_name, FOLDER, user_name, FOLDER, user_name) == 1)
           return (1);
         system(buffer);
