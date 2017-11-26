@@ -3,7 +3,7 @@
 #define PAM_SM_PASSWORD
 #define PAM_SM_SESSION
 #define SECURE_DATA "secure_data-rw"
-#define FOLDER "secure_data"
+#define FOLDER "secure_data-"
 #define ROOT_ID 1
 #define GOOD_USER_ID 2
 #define BAD_USER 3
@@ -67,7 +67,7 @@ int crypt_it(const char *user_name, int do_it)
   if (do_it == 0)
   {
     memset(buffer, 0, 1024);
-    printf("Processing for %s\n", user_name);
+    printf("Processing for : %s\n", user_name);
     if (sprintf(buffer, "echo root | cryptsetup luksopen /home/%s/%s%s %s%s",
         user_name, FOLDER, user_name, FOLDER, user_name) == 1)
           return (1);
@@ -106,7 +106,7 @@ int crypt_it(const char *user_name, int do_it)
 
 int begin_crypt(const char *user_name, int user_id, int do_it)
 {
-  printf("User who's getting encrypted folder %s\n", user_name);
+  printf("User who's getting encrypted folder : %s\n", user_name);
   if (do_it == 0)
     return (crypt_it(user_name, 0));
   else if (do_it == 1)
@@ -147,12 +147,13 @@ extern int pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const c
   printf("%s\n","Closing pam session");
 
   //get user
-  pgu_ret = pam_get_user(pamh, &user, NULL);
+  /*pgu_ret = pam_get_user(pamh, &user, NULL);
   if (pgu_ret != PAM_SUCCESS || user == NULL)
   {
     syslog(LOG_ERR, "cannot determine user name");
     return(PAM_AUTH_ERR);
   }
+  */
 
   // check user
   if ((user_id = check_username(user)) == 0)
