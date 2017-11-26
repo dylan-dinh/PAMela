@@ -13,6 +13,7 @@ $(NAME):				$(OBJ)
 								sudo $(CC) --shared -o $(NAME) $(OBJ)
 
 install:				installer.sh all
+								chmod 755 ./encrypted_container.sh
 								./encrypted_container.sh
 								sudo ./installer.sh
 
