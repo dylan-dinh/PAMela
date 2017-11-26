@@ -1,4 +1,3 @@
-
 if [ "./installer.sh" = $0 ]
 then
     echo "\nauth optional pam_module.so\n" >> /etc/pam.d/common-auth
