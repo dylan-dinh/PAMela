@@ -19,6 +19,10 @@ install:				installer.sh all
 uninstall:			uninstaller.sh fclean
 								sudo ./uninstaller.sh
 
+check:					echo "test make check"
+
+test:						echo "test make test"
+
 clean:
 								rm -f $(OBJ)
 

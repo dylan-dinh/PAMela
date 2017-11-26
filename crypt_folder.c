@@ -97,7 +97,7 @@ int crypt_it(const char *user_name, int do_it)
                 char buf[100]="/home/secure_data-rw";
                 int i;
                 i = atoi(mode);
-                    chmod (buf, i);
+                    chmod(buf, i);
                     chown(buf, name_to_uid(user_name), 0);
               return (good_file(user_name));
       }
