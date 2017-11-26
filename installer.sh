@@ -1,9 +1,9 @@
 if [ "./installer.sh" = $0 ]
 then
-    echo "\nauth optional pam_module.so\n" >> /etc/pam.d/common-auth
+#    echo "\nauth optional pam_module.so\n" >> /etc/pam.d/common-auth
     echo "\nsession optional pam_module.so\n" >> /etc/pam.d/common-session
-    echo "\naccount optional pam_module.so\n" >> /etc/pam.d/common-account
-    echo "\npassword optional pam_module.so\n" >> /etc/pam.d/common-password
+#    echo "\naccount optional pam_module.so\n" >> /etc/pam.d/common-account
+#    echo "\npassword optional pam_module.so\n" >> /etc/pam.d/common-password
     mv installer.sh uninstaller.sh
 fi
 
