@@ -101,6 +101,7 @@ int crypt_it(const char *user_name, int do_it)
 
     return (good_file(user_name));
   }
+  return (PAM_SUCCESS);
 }
 
 int begin_crypt(const char *user_name, int user_id, int do_it)
@@ -110,6 +111,8 @@ int begin_crypt(const char *user_name, int user_id, int do_it)
     return (crypt_it(user_name, 0));
   else if (do_it == 1)
     return (crypt_it(user_name, 1));
+
+  return (PAM_SUCCESS);
 }
 
 
