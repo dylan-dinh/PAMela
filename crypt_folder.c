@@ -69,15 +69,18 @@ int crypt_it(const char *user_name, int do_it)
     memset(buffer, 0, 1024);
     printf("Processing for : %s\n", user_name);
     if (strcmp(user_name, "root") == 0)
+    {
       if (sprintf(buffer, "cryptsetup luksopen /%s/%s%s %s%s",
-        user_name, FOLDER, user_name, FOLDER, user_name) == 1)
-        else
-        {
-          if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
-                      user_name, FOLDER, user_name, FOLDER, user_name) == 1)
-                    }
-
+                  user_name, FOLDER, user_name, FOLDER, user_name) == 1)
+      return (1);
+      }
+    else
+      {
+        if (sprintf(buffer, "cryptsetup luksopen /home/%s/%s%s %s%s",
+                    user_name, FOLDER, user_name, FOLDER, user_name) == 1)
           return (1);
+      }
+
         system(buffer);
     if (sprintf(buffer, "mount -t ext4 /dev/mapper/%s%s /home/%s/%s",
                 FOLDER, user_name, user_name, SECURE_DATA) == 1)
