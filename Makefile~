@@ -22,6 +22,7 @@ uninstall:				uninstaller.sh fclean
 
 check:					check_pam_module.sh
 					sudo ./check_pam_module.sh
+					echo "make check"
 
 test:					all
 					echo "make test"
