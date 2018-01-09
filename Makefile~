@@ -20,9 +20,7 @@ install:				installer.sh all
 uninstall:				uninstaller.sh fclean
 					sudo ./uninstaller.sh
 
-check:					check_pam_module.sh
-					sudo ./check_pam_module.sh
-					echo "make check"
+check:					echo "make check"
 
 test:					all
 					echo "make test"
