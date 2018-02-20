@@ -118,6 +118,16 @@ extern int	pam_sm_close_session(pam_handle_t *pamh, int flags, int argc, const c
   return (cipher(user));
 }
 
+void            clean(pam_handle_t *pamh, void *data, int error_status)
+{
+  char          *xx;
+
+  if ((xx = data))
+    while (*xx)
+      *xx++ = '\0';
+  free (data);
+}
+
 extern int	pam_sm_setcred(pam_handle_t *pamh, int flags, int argc, const char **argv)
 {
   return (PAM_SUCCESS);
