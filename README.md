@@ -1,5 +1,3 @@
 # PAMela
 
-
-simple PAM module for encrypted folder with password
-
+simple PAM module in C for encrypted folder with password
