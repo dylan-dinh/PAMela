@@ -1,4 +1,4 @@
-# PAMela Pam Module (unstable)
+# PAMela Pam Module
 
 Create simple PAM module in C for encrypted folder with password in $HOME of user.
 Tested on DEBIAN 8.
